@@ -1,0 +1,33 @@
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
+
+namespace Mechanika.WpfExtensions.Converters
+{
+    /// <summary>
+    /// Converts timespan to days
+    /// </summary>
+    [ValueConversion(typeof(TimeSpan), typeof(double))]
+    public class TimeSpanToDaysConverter : IValueConverter
+    {
+        /// <inheritdoc />
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            var ts = (TimeSpan) value;
+            return ts.TotalDays;
+        }
+
+        /// <inheritdoc />
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            var ticks = (double) value;
+            return TimeSpan.FromDays(ticks);
+        }
+    }
+}
